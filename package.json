@@ -1,0 +1,24 @@
+{
+  "name": "media-sorter",
+  "version": "1.0.0",
+  "description": "Sort vidoes and images by properties",
+  "main": "bin/main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npm run generate && electron .",
+    "dev": "npm run generate && electron . --debug",
+    "generate": "npm run html && npm run sass && tsc",
+    "sass": "sass ./app/assets/scss/:./bin/css/",
+    "html": "cp -r ./app/markup/. ./bin/html/"
+  },
+  "author": "Mike Vondrak",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^11.2.3",
+    "typescript": "^4.1.5"
+  },
+  "dependencies": {
+    "@types/electron": "^1.6.10",
+    "@types/node": "^14.14.27"
+  }
+}
