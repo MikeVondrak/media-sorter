@@ -32,13 +32,14 @@ function initialize() {
     mainWindow = new BrowserWindow(windowOptions);
     console.log("IN: " + __dirname);
 
-    mainWindow.loadURL(path.join('file://', __dirname, '../app/markup/main.html'))
+    //mainWindow.loadURL(path.join('file://', __dirname, '../app/markup/main.html'))
+    mainWindow.loadURL(path.join('file://', __dirname, './html/main.html'));
 
     // Launch fullscreen with DevTools open, usage: npm run debug
     if (debug) {
-      mainWindow.webContents.openDevTools()
-      mainWindow.maximize()
-      require('devtron').install()
+      mainWindow.webContents.openDevTools();
+      mainWindow.maximize();
+      require('devtron').install();
     }
 
     mainWindow.on('closed', () => {

@@ -8,7 +8,7 @@
     "start": "npm run generate && electron .",
     "dev": "npm run generate && electron . --debug",
     "generate": "npm run html && npm run sass && tsc",
-    "sass": "sass ./app/assets/scss/:./bin/css/",
+    "sass": "sass ./app/scss/:./bin/css/",
     "html": "cp -r ./app/markup/. ./bin/html/"
   },
   "author": "Mike Vondrak",
