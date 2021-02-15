@@ -1,7 +1,36 @@
+@import './colors';
+@import './fonts';
+
 * {
   box-sizing: border-box;
 }
 
 html, body {
-  font-family: sans-serif;
+  font-family: 'Open Sans', sans-serif;
+}
+h1, h2, h3, h4, h5 {
+  font-family: 'Abel', sans-serif;
+}
+body {
+  padding: 1rem;
+
+  color: $color-text;
+  background-color: $color-bg;
+}
+
+button {
+  padding: 0.5rem 1rem;
+  color: $color-button-color;
+  background: $color-button-bg;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  font-family: 'Abel', sans-serif;
+  font-size: 1.25rem;
+  &:hover {
+    background: $color-button-bg-hover;
+  }
+  &:active {
+    background: $color-button-bg-active;
+  }
 }

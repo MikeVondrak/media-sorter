@@ -7,9 +7,11 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "npm run generate && electron .",
     "dev": "npm run generate && electron . --debug",
-    "generate": "npm run html && npm run sass && tsc",
+    "generate": "npm run assets && npm run html && npm run sass && tsc",
     "sass": "sass ./app/scss/:./bin/css/",
-    "html": "cp -r ./app/markup/. ./bin/html/"
+    "sasswatch": "sass --watch ./app/scss/:./bin/css/",
+    "html": "cp -r ./app/markup/. ./bin/html/",
+    "assets": "cp -r ./app/assets/. ./bin/assets/"
   },
   "author": "Mike Vondrak",
   "license": "MIT",

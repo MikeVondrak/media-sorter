@@ -1,5 +1,6 @@
-import { app, App, BrowserWindow } from 'electron';
+import { app, App, BrowserWindow, dialog } from 'electron';
 import * as path from 'path';
+import { routes } from './routes';
 // const {app, BrowserWindow} = require('electron')
 // const path = require('path')
 
@@ -21,19 +22,23 @@ function initialize() {
 
   function createWindow() {
     const windowOptions = {
+      show: false, // wait for ready-to-show event before rendering to avoid pop-in
       width: 1080,
-      minWidth: 680,
+      minWidth: 320,
       height: 840,
+      //backgroundColor: "#000",
       title: app.getName(),
       webPreferences: {
         nodeIntegration: true
       }
     }
     mainWindow = new BrowserWindow(windowOptions);
-    console.log("IN: " + __dirname);
+    mainWindow.once('ready-to-show', () => mainWindow.show());
 
-    //mainWindow.loadURL(path.join('file://', __dirname, '../app/markup/main.html'))
-    mainWindow.loadURL(path.join('file://', __dirname, './html/main.html'));
+    const mainPage = routes.html._root + routes.html.main;
+    console.log("Loading: " + mainPage);
+
+    mainWindow.loadURL(path.join('file://', __dirname, mainPage));
 
     // Launch fullscreen with DevTools open, usage: npm run debug
     if (debug) {
@@ -54,36 +59,6 @@ function initialize() {
   // loadApp();
 }
 
-function attachAppEvents(app: App, createWindow: () => void) {
-  app.on('ready', () => {
-    createWindow();
-  });
-
-  app.on('window-all-closed', () => {
-    if (process.platform !== 'darwin') {
-      app.quit();
-    }
-  });
-
-  app.on('activate', () => {
-    if (mainWindow === null) {
-      createWindow();
-    }
-  });
-}
-
-
-// const newWindowBtn = document.getElementById('new-window')
-
-// newWindowBtn.addEventListener('click', (event) => {
-//   const modalPath = path.join('file://', __dirname, '../../sections/windows/modal.html');
-//   let win = new BrowserWindow({ width: 400, height: 320 });
-
-//   win.on('close', () => { win = null });
-//   win.loadURL(modalPath);
-//   win.show();
-// })
-
 // FROM ELECTRON DEMO
 // Make this app a single instance app.
 //
@@ -102,6 +77,32 @@ function makeSingleInstance () {
       if (mainWindow.isMinimized()) mainWindow.restore();
       mainWindow.focus();
     }
+  }); 
+}
+
+/**
+ * Attach events for ready, activate, window close
+ * @param app electron App object
+ * @param createWindow function to call after window is created
+ */
+function attachAppEvents(app: App, createWindow: () => void) {
+  app.on('ready', () => {
+    createWindow();
   });
-  
+
+  app.on('window-all-closed', () => {
+    if (process.platform !== 'darwin') {
+      app.quit();
+    }
+  });
+
+  app.on('activate', () => {
+    if (mainWindow === null) {
+      createWindow();
+    }
+  });
+}
+
+function openFolder() {
+  console.log("OPEN FOLDER");
 }
