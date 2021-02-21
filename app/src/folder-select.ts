@@ -11,8 +11,8 @@ function attachMainPageEventHandlers() {
   const sourceFolderLabelId = 'Select-Source-Folder-Label';
   const destinationFolderLabelId = 'Select-Destination-Folder-Label';
 
-  debugger;
   console.log('>>>>> folder-select running');
+
   const sourceFolderBtn = document?.getElementById(sourceFolderBtnId);
   const destinationFolderBtn = document?.getElementById(destinationFolderBtnId);
   const sourceFolderLabel = document?.getElementById(sourceFolderLabelId);
@@ -23,6 +23,7 @@ function attachMainPageEventHandlers() {
     
     dialog.showOpenDialog( { title: 'Select Source Folder', properties: ['openDirectory']})
       .then((result: OpenDialogResult) => {
+
         console.log("Source Folder:", result);
         
         // TODO: set state and trigger settings panel update
@@ -39,6 +40,7 @@ function attachMainPageEventHandlers() {
     
     dialog.showOpenDialog( { title: 'Select Destination Folder', properties: ['openDirectory']})
       .then((result: OpenDialogResult) => { 
+
         console.log("Destination Folder:", result);
         
         // TODO: set state and trigger settings panel update
