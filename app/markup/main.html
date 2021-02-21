@@ -3,10 +3,15 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'nonce-alabasterTunaDisaster37'">
+    <!-- <link rel="import" href="./components/settings-panel.html"> DEPRECATED DO NOT USE -->
     <link rel="stylesheet" href="../css/global.css">
     <link rel="stylesheet" href="../css/main.css">
   </head>
   <body>
+    <div>
+      Templates
+      
+    </div>
     <nav>
       <a>Folders</a>
       <a>Types</a>
@@ -30,45 +35,49 @@
         <div class="bg-dk">Bg Dk</div>
       </div>
       
-      <div>
-        <h1>1. Select Folders</h1>
-        
-        <p>Select the source folder that will be scanned for the types of media files you specify.</p>
-        <button id="Select-Source-Folder-Btn" class="cta-primary">Select Source Folder</button>
-        <label id="Select-Source-Folder-Label">No folder selected</label>
-        
-        <p>Select the destination folder that files will be sorted into.</p>
-        <button id="Select-Destination-Folder-Btn" class="cta-secondary">Select Destination Folder</button>
-        <label id="Select-Destination-Folder-Label">No folder selected</label>
-        <hr>
+      <div id="Sorting-Steps">
+        <div>
+          <h1>1. Select Folders</h1>
+          
+          <p>Select the source folder that will be scanned for the types of media files you specify.</p>
+          <button id="Select-Source-Folder-Btn" class="cta-primary">Select Source Folder</button>
+          <label id="Select-Source-Folder-Label">No folder selected</label>
+          
+          <p>Select the destination folder that files will be sorted into.</p>
+          <button id="Select-Destination-Folder-Btn" class="cta-secondary">Select Destination Folder</button>
+          <label id="Select-Destination-Folder-Label">No folder selected</label>
+          <hr>
 
-        <h1>2. Select Media Types</h1>
-        <p>Select the types of files you want to analyze.</p>
-        <hr>
-        
-        <h1>3. Select Sort Parameters</h1>
-        <p>Select the parameters used to group media files, like size, bitrate, etc.</p>
-        <hr>
-        
-        <h1>4. Analyze</h1>
-        <p>Scan for the selected files and display the proposed sorting results.</p>
-        <hr>
-        
-        <h1>5. Preview and Edit</h1>
-        <p>View the results of the analysis and adjust how files will be sorted.</p>
-        <hr>
-        
-        <h1>6. Apply Sorting</h1>
-        <p>Apply the proposed changes to the filesystem. THIS CANNOT BE UNDONE!</p>
+          <h1>2. Select Media Types</h1>
+          <p>Select the types of files you want to analyze.</p>
+          <hr>
+          
+          <h1>3. Select Sort Parameters</h1>
+          <p>Select the parameters used to group media files, like size, bitrate, etc.</p>
+          <hr>
+          
+          <h1>4. Analyze</h1>
+          <p>Scan for the selected files and display the proposed sorting results.</p>
+          <hr>
+          
+          <h1>5. Preview and Edit</h1>
+          <p>View the results of the analysis and adjust how files will be sorted.</p>
+          <hr>
+          
+          <h1>6. Apply Sorting</h1>
+          <p>Apply the proposed changes to the filesystem. THIS CANNOT BE UNDONE!</p>
+        </div>
+        <div id="Settings-Panel">
+          This content is replaced by the Settings Panel template
+        </div>
       </div>
-      <div id="Settings-Panel">
 
-      </div>
     </main>
   
     <script type="text/javascript" nonce="alabasterTunaDisaster37">
-
+      require('../src/load-html');
       require('../src/folder-select');
+      require('../src/components/settings-panel');
     </script>
   </body>
 

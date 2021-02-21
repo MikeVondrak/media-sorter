@@ -1,3 +1,4 @@
+import * as path from 'path';
 
 // https://github.com/microsoft/TypeScript/issues/35859
 /**
@@ -9,3 +10,12 @@
  * @param key
  */
 export const getKeyValue = <T extends object, U extends keyof T>(obj: T) => (key: U) => obj[key];
+
+/**
+ * Use path to resolve compound file/folder path
+ * - include '../' by default so URLs are relative to /app/
+ */
+export function getPath(uri: string): string {
+  const uriPath = path.join(__dirname, '../', uri);
+  return uriPath;
+}

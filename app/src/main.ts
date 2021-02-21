@@ -1,9 +1,9 @@
 
-import { routes } from './routes';
-import * as path from 'path';
+import { ipcMain } from 'electron';
 import { ElectronApp } from './app';
-import { dialog, ipcMain } from 'electron';
+import { routes } from './routes';
 import { AppState, defaultAppState } from './models/app.model';
+import { getPath } from './utilities';
 
 let appState: AppState = defaultAppState;
 
@@ -14,7 +14,7 @@ const windowOptions: Partial<Electron.BrowserWindowConstructorOptions> = {
   height: 840,
   //backgroundColor: "#000",
   title: 'Media File Sorter',
-  icon: path.join(__dirname, '../', '/assets/images/media-file-sorter-icon-16.png'),
+  icon: getPath('/assets/images/media-file-sorter-icon-16.png'),
   webPreferences: {
     nodeIntegration: true,
     enableRemoteModule: true 
@@ -31,12 +31,15 @@ const electronApp: ElectronApp =
     'main' // html path to match in routes
   );
 
-ipcMain.on('setSourceFolder', (event, arg) => {
-  console.log('********* setSourceFolder: ' + arg);
-  appState.sourceFolder = arg;
-});
+function registerIpcMainEvents() {
+  ipcMain.on('setSourceFolder', (event, arg) => {
+    console.log('********* setSourceFolder: ' + arg);
+    appState.sourceFolder = arg;
+  });
 
-ipcMain.on('setDestinationFolder', (event, arg) => {
-  console.log('********* setDestinationFolder: ' + arg);
-  appState.destinationFolder = arg;
-});
+  ipcMain.on('setDestinationFolder', (event, arg) => {
+    console.log('********* setDestinationFolder: ' + arg);
+    appState.destinationFolder = arg;
+  });
+}
+registerIpcMainEvents();

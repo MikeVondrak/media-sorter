@@ -1,0 +1,10 @@
+@import '../colors';
+
+%Settings-Panel {
+  #Settings-Panel {
+    padding: 1rem;
+    color: $color-text-lt;
+    background: $color-primary-dk;
+    border-radius: 0.5rem;
+  }
+}

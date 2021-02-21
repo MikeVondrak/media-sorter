@@ -1,9 +1,15 @@
 @import './colors';
+@import './components/settings-panel';
 
 main {
+  // import component styles
+  @extend %Settings-Panel;
+
+
   .colors {
     display: flex;
     justify-content: space-around;
+    margin-bottom: 2rem;
     > * {
       flex: 0 1 20%;
       padding: 1rem;
@@ -22,6 +28,18 @@ main {
     }
     .bg-dk {
       background-color: $color-bg-dk;
+    }
+  }
+
+  #Sorting-Steps {
+    display: flex;
+    justify-content: space-between;
+    > div {
+      flex: 1 1 auto;
+      &:last-child {
+        flex: 0 0 500px;
+        margin-left: 2rem;
+      }
     }
   }
 }
