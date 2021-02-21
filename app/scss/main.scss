@@ -1,3 +1,27 @@
+@import './colors';
+
 main {
-  
+  .colors {
+    display: flex;
+    justify-content: space-around;
+    > * {
+      flex: 0 1 20%;
+      padding: 1rem;
+    }
+    .primary {
+      color: $color-text-lt;
+      background-color: $color-primary;
+    }
+    .primary-dk {
+      color: $color-text-lt;
+      background-color: $color-primary-dk;
+    }
+    .secondary {
+      color: $color-text-lt;
+      background-color: $color-secondary;
+    }
+    .bg-dk {
+      background-color: $color-bg-dk;
+    }
+  }
 }

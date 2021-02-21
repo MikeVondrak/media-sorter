@@ -24,6 +24,7 @@ button {
   background: $color-button-bg;
   outline: none;
   border: none;
+  border-radius: 0.25rem;
   cursor: pointer;
   font-family: 'Abel', sans-serif;
   font-size: 1.25rem;
@@ -32,5 +33,12 @@ button {
   }
   &:active {
     background: $color-button-bg-active;
+  }
+
+  &.cta-primary {
+
+  }
+  &.cta-secondary {
+    background: $color-primary;
   }
 }

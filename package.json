@@ -2,7 +2,7 @@
   "name": "media-sorter",
   "version": "1.0.0",
   "description": "Sort vidoes and images by properties",
-  "main": "bin/main.js",
+  "main": "bin/src/main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "npm run generate && electron .",
@@ -16,7 +16,9 @@
   "author": "Mike Vondrak",
   "license": "MIT",
   "devDependencies": {
+    "devtron": "^1.4.0",
     "electron": "^11.2.3",
+    "electron-devtools-installer": "^3.1.1",
     "typescript": "^4.1.5"
   },
   "dependencies": {
