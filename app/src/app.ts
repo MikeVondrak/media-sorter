@@ -40,12 +40,17 @@ export class ElectronApp {
     windowOptions: Partial<Electron.BrowserWindowConstructorOptions>,
     private routes: Routes,
     private mainPagePath: string,
+    private mainWindowReadyCallback?: () => void
   ) {
     app.setName(appName);
     this.options = { ...this.defaultWindowOptions, ...windowOptions };
     
     this.makeSingleInstance();
     this.attachAppEvents();
+  }
+
+  public getMainWindow() {
+    return this.mainWindow;
   }
 
   /**
@@ -100,6 +105,7 @@ export class ElectronApp {
     const window = this.mainWindow as BrowserWindow;
 
     this.mainWindow.once('ready-to-show', () => window.show());
+    this.mainWindow.on('ready-to-show', () => this.mainWindowReady());
 
     let mainPagePath = this.routes.html._root;
 
@@ -118,9 +124,10 @@ export class ElectronApp {
     const mainPageFile = getKeyValue(mainPage)(this.mainPagePath);
     mainPagePath += mainPageFile;
 
-    console.log("Loading: " + __dirname, mainPagePath);
+    const fullPath = path.join('file://', __dirname, '../', mainPagePath);
+    console.log("Loading: ", fullPath);
 
-    this.mainWindow.loadURL(path.join('file://', __dirname, '../', mainPagePath));
+    this.mainWindow.loadURL(fullPath);
 
     // Launch fullscreen with DevTools open, usage: npm run dev
     if (this.debug) {
@@ -133,5 +140,12 @@ export class ElectronApp {
     this.mainWindow.on('closed', () => {
       this.mainWindow = null as any;
     })
+  }
+
+  private mainWindowReady() {
+    console.log('===== ElectronApp mainWindowReady');
+    if (this.mainWindowReadyCallback) {
+      this.mainWindowReadyCallback();
+    }
   }
 }

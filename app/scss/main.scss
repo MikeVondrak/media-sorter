@@ -34,6 +34,7 @@ main {
   #Sorting-Steps {
     display: flex;
     justify-content: space-between;
+    align-items: flex-start;
     > div {
       flex: 1 1 auto;
       &:last-child {

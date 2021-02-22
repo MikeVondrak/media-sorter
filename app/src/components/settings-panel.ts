@@ -1,17 +1,28 @@
-const containerHtmlId = "Settings-Panel";
-const templateId = "Settings-Panel-Template"; // from data-template-id attr
+import { ipcRenderer } from "electron";
+import { loadTemplateContentById } from "../utilities";
+
+const containerHtmlId = 'Settings-Panel';
+const templateId = 'Settings-Panel-Template'; // from data-template-id attr
+const templateHtmlFile = 'settings-panel.html';
 
 const containerEl = document.getElementById(containerHtmlId);
 
-const templatesCollection = document.getElementsByTagName('template');
-const templatesArray = Array.from(templatesCollection);
-const template = templatesArray.find(template => template.dataset.templateId === templateId);
-
-// debugger;
-if (containerEl) {
-  containerEl.innerHTML = containerEl?.innerHTML && template?.outerHTML ? template.outerHTML : 'Error rendering template: ' + templateId;
-} else {
-  throw new Error('Could not find container for template: ' + templateId);
+function loadTemplates() {
+  loadTemplateContentById(templateId, containerEl);  
 }
 
-console.log('%%%%%%%%%%%% SETTINGS PANEL');
+// TODO: move this to a common function to update all templates
+ipcRenderer.on('main-window-ready', () => {
+  console.log('>>>>> settingsPanel - main-window-ready');
+  loadTemplates();
+});
+
+ipcRenderer.on('template-loaded', (err, file) => {
+  console.log('>>>>> settingsPanel - template-loaded: ', file);
+  if (file === templateHtmlFile) {
+    console.log('>>>>> settingsPanel - template-loaded - updating ', file);
+    loadTemplates();
+  }
+});
+
+console.log('>>>>> settingsPanel - init');

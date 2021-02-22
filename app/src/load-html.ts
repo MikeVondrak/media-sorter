@@ -1,39 +1,45 @@
-const remote = require('electron').remote;
-const electronFs = remote.require('fs');
+// const remote = require('electron').remote;
+// const electronFs = remote.require('fs');
+import { ipcRenderer } from "electron";
 import * as fs from 'fs';
 import { getPath } from './utilities';
 
 const htmlPath = getPath('/html/components');
 const parser = new DOMParser();
 
-console.log('LOAD HTML: ' + htmlPath);
+console.log('<<<<< load-html path: ' + htmlPath);
 
 fs.readdir(htmlPath, (err, files) => {
   if (err) {
     throw new Error(err.message);
   }
-  console.log('FS RESULT: ', files);
+  console.log('<<<<< load-html readdir: ', files);
 
   files.forEach(file => {
     if (file.endsWith('.html')) {
       const filePath = htmlPath + '\\' + file;
-      debugger;
-      console.log('LOADING: ' + filePath);
+
+      console.log('<<<<< loading file: ' + filePath);
+
       fs.readFile(filePath, (err, fileContents) => {
+        
+        console.log('<<<<< file contents: ', fileContents.toString());
+        
         if (err) {
           throw new Error(err.message);
         }
+        // NOTE: parsed html is wrapped in html and body elements?
         const html = parser.parseFromString(fileContents.toString(), 'text/html');
-        const templateContents = html.querySelector('body')?.childNodes; // parsed html is wrapped in html and body elements, get the children of body to insert into template container
-        if (!templateContents) {
+        const template = html.querySelector('template');
+        
+        if (!html || !template) {
           throw new Error('Unable to parse template: ' + file);
         }
-        const frag = document.createDocumentFragment();
-        templateContents.forEach(node => {
-          frag.appendChild(node);
-        });
-        document.body.appendChild(frag);
-        debugger;
+        
+        let fragment = document.createDocumentFragment();     
+        fragment.appendChild(template as Node);
+        document.body.appendChild(fragment);
+        ipcRenderer.send('templateLoaded', file);
       })
     }
   })
