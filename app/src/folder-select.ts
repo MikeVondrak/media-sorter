@@ -1,4 +1,5 @@
 import { ipcRenderer } from "electron";
+import { settingsActions } from "./models/actions";
 import { OpenDialogResult } from "./models/electron.model";
 
 const { dialog } = require('electron').remote;
@@ -26,9 +27,8 @@ function attachMainPageEventHandlers() {
 
         console.log("Source Folder:", result);
         
-        // TODO: set state and trigger settings panel update
         if (!result.canceled) {
-          ipcRenderer.send('setSourceFolder', result.filePaths[0]);
+          ipcRenderer.send(settingsActions.setSourceFolder, result.filePaths[0]);
         }
         if (!result.canceled && sourceFolderLabel) {
           sourceFolderLabel.innerText = result.filePaths[0];
@@ -43,9 +43,8 @@ function attachMainPageEventHandlers() {
 
         console.log("Destination Folder:", result);
         
-        // TODO: set state and trigger settings panel update
         if (!result.canceled) {
-          ipcRenderer.send('setDestinationFolder', result.filePaths[0]);
+          ipcRenderer.send(settingsActions.setOutputFolder, result.filePaths[0]);
         }
         if (!result.canceled && destinationFolderLabel) {
           destinationFolderLabel.innerText = result.filePaths[0];

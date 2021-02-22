@@ -2,6 +2,7 @@
 // const electronFs = remote.require('fs');
 import { ipcRenderer } from "electron";
 import * as fs from 'fs';
+import { appActions } from "./models/actions";
 import { getPath } from './utilities';
 
 const htmlPath = getPath('/html/components');
@@ -39,7 +40,7 @@ fs.readdir(htmlPath, (err, files) => {
         let fragment = document.createDocumentFragment();     
         fragment.appendChild(template as Node);
         document.body.appendChild(fragment);
-        ipcRenderer.send('templateLoaded', file);
+        ipcRenderer.send(appActions.templateFromHtml, file);
       })
     }
   })
