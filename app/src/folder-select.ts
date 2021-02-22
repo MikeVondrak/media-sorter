@@ -14,13 +14,14 @@ function attachMainPageEventHandlers() {
 
   console.log('>>>>> folder-select running');
 
-  const sourceFolderBtn = document?.getElementById(sourceFolderBtnId);
-  const destinationFolderBtn = document?.getElementById(destinationFolderBtnId);
+  const sourceFolderBtn = document?.getElementById(sourceFolderBtnId) as HTMLButtonElement;
+  const destinationFolderBtn = document?.getElementById(destinationFolderBtnId) as HTMLButtonElement;
   const sourceFolderLabel = document?.getElementById(sourceFolderLabelId);
   const destinationFolderLabel = document?.getElementById(destinationFolderLabelId);
 
   sourceFolderBtn?.addEventListener('click', () => {
     console.log('Select Source click');
+    sourceFolderBtn.disabled = true;
     
     dialog.showOpenDialog( { title: 'Select Source Folder', properties: ['openDirectory']})
       .then((result: OpenDialogResult) => {
@@ -29,14 +30,17 @@ function attachMainPageEventHandlers() {
         
         if (!result.canceled) {
           ipcRenderer.send(settingsActions.setSourceFolder, result.filePaths[0]);
+
+          if (sourceFolderLabel) {
+            sourceFolderLabel.innerText = result.filePaths[0];
+          }
         }
-        if (!result.canceled && sourceFolderLabel) {
-          sourceFolderLabel.innerText = result.filePaths[0];
-        }
+        sourceFolderBtn.disabled = false;
       });
   });
   destinationFolderBtn?.addEventListener('click', () => {
     console.log('SelectDestination click');
+    destinationFolderBtn.disabled = true;
     
     dialog.showOpenDialog( { title: 'Select Destination Folder', properties: ['openDirectory']})
       .then((result: OpenDialogResult) => { 
@@ -45,10 +49,12 @@ function attachMainPageEventHandlers() {
         
         if (!result.canceled) {
           ipcRenderer.send(settingsActions.setOutputFolder, result.filePaths[0]);
+          
+          if (destinationFolderLabel) {
+            destinationFolderLabel.innerText = result.filePaths[0];
+          }
         }
-        if (!result.canceled && destinationFolderLabel) {
-          destinationFolderLabel.innerText = result.filePaths[0];
-        }
+        destinationFolderBtn.disabled = false;
       });
   });
 }
