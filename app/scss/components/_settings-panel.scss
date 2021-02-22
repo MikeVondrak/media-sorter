@@ -2,9 +2,10 @@
 
 %Settings-Panel {
   #Settings-Panel {
-    padding: 1rem;
+    padding: 1rem 2rem;
     color: $color-text-lt;
     background: $color-primary-dk;
     border-radius: 0.5rem;
+    box-shadow: 1px 1px 2px 2px #000;
   }
 }

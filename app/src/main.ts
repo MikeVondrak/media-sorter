@@ -48,17 +48,27 @@ class MediaFileSortApp {
     ipcMain.on('setSourceFolder', (event, arg) => {
       console.log('***** setSourceFolder: ' + arg);
       this.appState.sourceFolder = arg;
+      this.emitToWebContents('app-state-update', this.appState);
     });
   
     ipcMain.on('setDestinationFolder', (event, arg) => {
       console.log('***** setDestinationFolder: ' + arg);
       this.appState.destinationFolder = arg;
+      this.emitToWebContents('app-state-update', this.appState);
     });
 
     ipcMain.on('templateLoaded', (event, arg) => {
       console.log('***** templateLoaded: ', arg);
       this.electronApp.getMainWindow()?.webContents.send('template-loaded', arg);
     });
+  }
+
+  private emitToWebContents(event: string, args?: any) {
+    const mainWindow = this.electronApp.getMainWindow();
+    if (!mainWindow) {
+      throw new Error('Main Window Undefined in emitToWebContents');
+    }
+    mainWindow.webContents.send(event, args);
   }
 }
 

@@ -30,3 +30,9 @@ export const defaultAppState: AppState = {
   fileTypes: [],
   sortParameters: { properties: [] }
 }
+
+export interface UiProperty {
+  htmlId: string,
+  stateProperty: string,
+  uiLabel: string
+}

@@ -50,5 +50,4 @@ export function loadTemplateContentById(templateId: string, containerElement: HT
   }
   containerElement.innerHTML = '';
   containerElement.appendChild(templateContent);
-  // return templateContent;
 }
