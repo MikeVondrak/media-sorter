@@ -1,3 +1,5 @@
+import { SectionConfig } from "./sections";
+
 export type SortProperties = 'width' | 'height' | 'bitrateBps';
 
 export interface SortDimension {
@@ -10,10 +12,11 @@ export interface SortParameters {
 }
 
 export interface AppState {
-  sourceFolder: string,
-  destinationFolder: string,
-  fileTypes: string[],
-  sortParameters: SortParameters,
+  sourceFolder?: string,
+  destinationFolder?: string,
+  fileTypes?: string[],
+  sortParameters?: SortParameters,
+  sections?: SectionConfig[],
 }
 
 export const defaultSortParameters: SortParameters = {
@@ -28,11 +31,13 @@ export const defaultAppState: AppState = {
   sourceFolder: '',
   destinationFolder: '',
   fileTypes: [],
-  sortParameters: { properties: [] }
+  sortParameters: { properties: [] },
+  sections: [],
 }
 
 export interface UiProperty {
-  htmlId: string,
+  htmlId?: string,
+  selector?: string,
   stateProperty: string,
   uiLabel: string
 }

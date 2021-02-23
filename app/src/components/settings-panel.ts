@@ -19,7 +19,7 @@ function loadTemplate() {
 
 function updateTemplate(appState: AppState) {
   htmlIdStatePropertyAssoc.forEach(assoc => {
-    let el = document.getElementById(assoc.htmlId);
+    let el = document.getElementById(assoc.htmlId || '');
     let val = appState[assoc.stateProperty as keyof AppState];
     console.log('>>>>> settingsPanel - updateTemplate el: ' + el + ', val: ' + val);
     if (el) {
