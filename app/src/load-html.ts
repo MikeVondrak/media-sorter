@@ -3,9 +3,9 @@
 import { ipcRenderer } from "electron";
 import * as fs from 'fs';
 import { appActions } from "./models/actions";
-import { getPath } from './utilities';
+import * as util from './utilities';
 
-const htmlPath = getPath('/html/components');
+const htmlPath = util.getPath('/html/components');
 const parser = new DOMParser();
 
 console.log('<<<<< load-html path: ' + htmlPath);
@@ -35,11 +35,13 @@ fs.readdir(htmlPath, (err, files) => {
         
         if (!html || !template) {
           throw new Error('Unable to parse template: ' + file);
-        }
-        
-        let fragment = document.createDocumentFragment();     
-        fragment.appendChild(template as Node);
-        document.body.appendChild(fragment);
+        }      
+        util.appendNode(template);
+        // let fragment = document.createDocumentFragment();     
+        // fragment.appendChild(template as Node);
+        // document.body.appendChild(fragment);
+
+        // notify app process
         ipcRenderer.send(appActions.templateFromHtml, file);
       })
     }

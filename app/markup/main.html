@@ -33,6 +33,11 @@
       
       <div id="Sorting-Steps">
         <div>
+          <!-- data-section needs to match SectionId -->
+          <div data-section-id="Folders-Section">
+            Dynamic content for section
+          </div>
+
           <h1>1. Select Folders</h1>
           
           <p>Select the source folder that will be scanned for the types of media files you specify.</p>
@@ -74,6 +79,7 @@
       require('../src/load-html');
       require('../src/folder-select');
       require('../src/components/settings-panel');
+      require('../src/load-sections');
     </script>
   </body>
 

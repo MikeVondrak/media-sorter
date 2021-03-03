@@ -20,6 +20,12 @@ export function getPath(uri: string): string {
   return uriPath;
 }
 
+export function appendNode(node: Node) {
+  let fragment = document.createDocumentFragment();     
+  fragment.appendChild(node);
+  document.body.appendChild(fragment);
+}
+
 /**
  * Refresh list of templates from DOM and return html element matching template ID
  */

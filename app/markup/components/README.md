@@ -1,0 +1,1 @@
+Every .html file in this folder or subfolders will be loaded by load-html.ts, everything in here should be wrapped in a `<template>` element and loaded dynamically.

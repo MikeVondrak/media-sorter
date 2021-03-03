@@ -57,14 +57,14 @@ export class Section {
 
     // update view
     const templateEl = document.getElementById(this.sectionId as string);
-    const templateData = templateEl?.querySelectorAll('[data-tag]');
+    const templateData = templateEl?.querySelectorAll('[data-ui-id]');
     if (!templateData) {
-      console.log('WARNING! No data-tag attributes found');
+      console.log('WARNING! No data-ui-id attributes found');
       return;
     }
     templateData.forEach(template => {
       const t = template as HTMLElement
-      switch (t.dataset.tag) {
+      switch (t.dataset.uiId) {
         case 'title': t.innerText = this.title; break;
         case 'ready': t.innerText = 'Ready: ' + this.isReady.toString(); break;
         case 'content': t.innerText = 'Content: ' + this.sectionId; break;
