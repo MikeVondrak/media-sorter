@@ -1,4 +1,5 @@
 import { ipcRenderer } from "electron";
+import { loadSections } from "../load-sections";
 import { appActions } from "../models/actions";
 import { AppState, UiProperty } from "../models/app.model";
 import { SectionId } from "../models/sections";
@@ -24,7 +25,7 @@ export class Section {
    * - appState: AppState to initialize with
    */
   constructor(
-    private sectionId: SectionId, 
+    private sectionId: SectionId,
     appState: AppState
   ) {
     this.registerEventHandlers();
@@ -45,7 +46,7 @@ export class Section {
       throw new Error('SectionId undefined');
     }
     
-    const contentState = appState?.sections?.find(state => state.contentId === this.sectionId);
+    const contentState = appState?.sections?.config?.find(state => state.contentId === this.sectionId);
     if (!contentState) {
       console.log('WARNING! Could not get content state for sectionId: ' + this.sectionId);
       return;
@@ -56,7 +57,10 @@ export class Section {
     this.isReady = contentState.ready ? contentState.ready : false;
 
     // update view
-    const templateEl = document.getElementById(this.sectionId as string);
+    const templateEl = document.getElementById(this.sectionId as string); // get element by id set on section containing div by load-sections.ts
+    if (!templateEl) {
+      console.log('ERROR: Could not get template by id: ' + this.sectionId);
+    }
     const templateData = templateEl?.querySelectorAll('[data-ui-id]');
     if (!templateData) {
       console.log('WARNING! No data-ui-id attributes found');
@@ -67,10 +71,31 @@ export class Section {
       switch (t.dataset.uiId) {
         case 'title': t.innerText = this.title; break;
         case 'ready': t.innerText = 'Ready: ' + this.isReady.toString(); break;
-        case 'content': t.innerText = 'Content: ' + this.sectionId; break;
+        //case 'content': t.innerText = 'Content: ' + this.sectionId; break;
+        case 'content': this.loadSectionContent(t, this.sectionId); break;
         default: ;
       }
     });
+  }
+
+  private loadSectionContent(template: HTMLElement, sectionId: SectionId) {
+    console.log('+++++ section loadSectionContent: ' + sectionId);
+    
+    // TODO: better way to check template has been loaded?
+    if (!!template.firstElementChild) {
+      console.log('+++++ section loadSectionContent template already exists: ' + sectionId);
+      // template already has content loaded, don't destroy to preserve event handlers
+      return;
+    }
+    const contentTemplate = document.querySelector('[data-template-id="' + sectionId + '"]') as HTMLTemplateElement;
+    let contentNode = contentTemplate?.content?.cloneNode(true);
+    if (!contentNode) {
+      // RETURN
+      document.createTextNode('Unable to load template: ' + sectionId);
+      return;
+    }
+    template.innerHTML = '';
+    template.appendChild(contentNode);
   }
 
 }

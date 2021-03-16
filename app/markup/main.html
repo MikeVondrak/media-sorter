@@ -38,35 +38,29 @@
             Dynamic content for section
           </div>
 
-          <h1>1. Select Folders</h1>
+          <div data-section-id="Files-Section">
+            Dynamic content for section
+          </div>
           
-          <p>Select the source folder that will be scanned for the types of media files you specify.</p>
-          <button id="Select-Source-Folder-Btn" class="cta-primary">Select Source Folder</button>
-          <label id="Select-Source-Folder-Label">No folder selected</label>
+          <div data-section-id="Sort-Section">
+            Dynamic content for section
+          </div>
           
-          <p>Select the destination folder that files will be sorted into.</p>
-          <button id="Select-Destination-Folder-Btn" class="cta-secondary">Select Destination Folder</button>
-          <label id="Select-Destination-Folder-Label">No folder selected</label>
-          <hr>
+          <div data-section-id="Analyze-Section">
+            Dynamic content for section
+          </div>
+          
+          <div data-section-id="Preview-Section">
+            Dynamic content for section
+          </div>
+          
+          <div data-section-id="Apply-Section">
+            Dynamic content for section
+          </div>
 
-          <h1>2. Select Media Types</h1>
-          <p>Select the types of files you want to analyze.</p>
-          <hr>
-          
-          <h1>3. Select Sort Parameters</h1>
-          <p>Select the parameters used to group media files, like size, bitrate, etc.</p>
-          <hr>
-          
-          <h1>4. Analyze</h1>
-          <p>Scan for the selected files and display the proposed sorting results.</p>
-          <hr>
-          
-          <h1>5. Preview and Edit</h1>
-          <p>View the results of the analysis and adjust how files will be sorted.</p>
-          <hr>
-          
-          <h1>6. Apply Sorting</h1>
-          <p>Apply the proposed changes to the filesystem. THIS CANNOT BE UNDONE!</p>
+          <div data-section-id="Results-Section">
+            Dynamic content for section
+          </div>
         </div>
         <div id="Settings-Panel">
           *This content is replaced by the Settings Panel template*
@@ -76,9 +70,10 @@
     </main>
   
     <script type="text/javascript" nonce="alabasterTunaDisaster37">
+      // parse all .html files in 
       require('../src/load-html');
-      require('../src/folder-select');
       require('../src/components/settings-panel');
+      require('../src/components/sections/folder-select');
       require('../src/load-sections');
     </script>
   </body>

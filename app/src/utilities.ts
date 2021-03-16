@@ -29,7 +29,7 @@ export function appendNode(node: Node) {
 /**
  * Refresh list of templates from DOM and return html element matching template ID
  */
-export function loadTemplateContentById(templateId: string, containerElement: HTMLElement | null): void {
+export function loadTemplateContentById(templateId: string, containerElement: HTMLElement | null, createHtmlId: string = ''): Node | null {
   if (!containerElement) {
     throw new Error('No container for template: ' + templateId);
   }
@@ -46,14 +46,20 @@ export function loadTemplateContentById(templateId: string, containerElement: HT
     return template.dataset.templateId === templateId
   });
   if (!template) {
-    console.log('getTemplateContentById - tempate not found: ' + templateId);
-    return;
+    console.log('ERROR! getTemplateContentById - tempate not found: ' + templateId);
+    return null;
   }
 
   let templateContent = template?.content.cloneNode(true);
   if (!templateContent) {
     templateContent = document.createTextNode('Unable to load template: ' + templateId);
+  } else if (!!createHtmlId && createHtmlId !== '') {
+    const el = templateContent as HTMLElement;
+    if (el.firstElementChild) {
+      el.firstElementChild.id = createHtmlId;
+    }
   }
   containerElement.innerHTML = '';
   containerElement.appendChild(templateContent);
+  return templateContent;
 }

@@ -1,10 +1,10 @@
 import { ipcRenderer } from "electron";
-import { settingsActions } from "./models/actions";
-import { OpenDialogResult } from "./models/electron.model";
+import { appActions, settingsActions } from "../../models/actions";
+import { OpenDialogResult } from "../../models/electron.model";
 
 const { dialog } = require('electron').remote;
 
-console.log('>>>>> folder-select');
+console.log('^^^^^ folder-select');
 
 function attachMainPageEventHandlers() {
   const sourceFolderBtnId = 'Select-Source-Folder-Btn';
@@ -12,21 +12,23 @@ function attachMainPageEventHandlers() {
   const sourceFolderLabelId = 'Select-Source-Folder-Label';
   const destinationFolderLabelId = 'Select-Destination-Folder-Label';
 
-  console.log('>>>>> folder-select running');
+  console.log('^^^^^ folder-select running');
 
   const sourceFolderBtn = document?.getElementById(sourceFolderBtnId) as HTMLButtonElement;
   const destinationFolderBtn = document?.getElementById(destinationFolderBtnId) as HTMLButtonElement;
   const sourceFolderLabel = document?.getElementById(sourceFolderLabelId);
   const destinationFolderLabel = document?.getElementById(destinationFolderLabelId);
 
+  console.log('^^^^^ folder-select attachMainPageEventHandlers');
+
   sourceFolderBtn?.addEventListener('click', () => {
-    console.log('Select Source click');
+    console.log('^^^^^ folder-select Select Source click');
     sourceFolderBtn.disabled = true;
     
     dialog.showOpenDialog( { title: 'Select Source Folder', properties: ['openDirectory']})
       .then((result: OpenDialogResult) => {
 
-        console.log("Source Folder:", result);
+        console.log("^^^^^ folder-select Source Folder:", result);
         
         if (!result.canceled) {
           ipcRenderer.send(settingsActions.setSourceFolder, result.filePaths[0]);
@@ -39,13 +41,13 @@ function attachMainPageEventHandlers() {
       });
   });
   destinationFolderBtn?.addEventListener('click', () => {
-    console.log('SelectDestination click');
+    console.log('^^^^^ folder-select SelectDestination click');
     destinationFolderBtn.disabled = true;
     
     dialog.showOpenDialog( { title: 'Select Destination Folder', properties: ['openDirectory']})
       .then((result: OpenDialogResult) => { 
 
-        console.log("Destination Folder:", result);
+        console.log("^^^^^ folder-select Destination Folder:", result);
         
         if (!result.canceled) {
           ipcRenderer.send(settingsActions.setOutputFolder, result.filePaths[0]);
@@ -59,4 +61,7 @@ function attachMainPageEventHandlers() {
   });
 }
 
-attachMainPageEventHandlers();
+ipcRenderer.on(appActions.allSectionsLoaded, (event) => {
+  console.log('^^^^^ folder-select allSectionsLoaded');
+  attachMainPageEventHandlers();
+});

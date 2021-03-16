@@ -1,4 +1,4 @@
-import { SectionConfig } from "./sections";
+import { SectionConfig, sectionsConfig } from "./sections";
 
 export type SortProperties = 'width' | 'height' | 'bitrateBps';
 
@@ -12,11 +12,19 @@ export interface SortParameters {
 }
 
 export interface AppState {
+  templates?: {
+    loading?: boolean,
+    loaded?: boolean,
+  },
+  sections?: {
+    loading: boolean,
+    loaded: boolean,
+    config: SectionConfig[],
+  },
   sourceFolder?: string,
   destinationFolder?: string,
   fileTypes?: string[],
   sortParameters?: SortParameters,
-  sections?: SectionConfig[],
 }
 
 export const defaultSortParameters: SortParameters = {
@@ -28,11 +36,19 @@ export const defaultSortParameters: SortParameters = {
 }
 
 export const defaultAppState: AppState = {
+  templates: {
+    loading: false,
+    loaded: false,
+  },
+  sections: {
+    loading: false,
+    loaded: false,
+    config: sectionsConfig,
+  },
   sourceFolder: '',
   destinationFolder: '',
   fileTypes: [],
   sortParameters: { properties: [] },
-  sections: [],
 }
 
 export interface UiProperty {

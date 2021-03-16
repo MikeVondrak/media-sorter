@@ -4,7 +4,7 @@ import { ElectronApp } from './app';
 import { routes } from './routes';
 import { AppState, defaultAppState } from './models/app.model';
 import { getPath } from './utilities';
-import { appActions, AppActions, settingsActions } from './models/actions';
+import { appActions, AppActions, loadHtmlActions, sectionActions, settingsActions } from './models/actions';
 
 class MediaFileSortApp {
 
@@ -29,6 +29,8 @@ class MediaFileSortApp {
    * Constructor
    */
   constructor() {
+    this.appState
+
     const windowReady = this.handleMainWindowReady.bind(this);
     this.electronApp = new ElectronApp( 
       'Media File Sorter', // app name
@@ -60,13 +62,35 @@ class MediaFileSortApp {
       this.emitToWebContents(appActions.appStateUpdate, this.appState);
     });
 
-    ipcMain.on(appActions.templateFromHtml, (event, filename: string) => {
+    // receive 'templateFromHtml' from load-html and emit 'templateLoaded' to notify all renderers
+    ipcMain.on(loadHtmlActions.templateFromHtml, (event, filename: string) => {
       console.log('***** templateLoaded: ', filename);
       this.emitToWebContents(appActions.templateLoaded, filename);
     });
+
+    // all templates loaded received from load-html, update state and notify renderers
+    ipcMain.on(loadHtmlActions.templateFromHtmlDone, (event, done: boolean) => {
+      console.log('***** templateLoadingDone: ', done);
+      if (this.appState.templates) {
+        this.appState.templates.loaded = done;
+      }
+      this.emitToWebContents(appActions.allTemplatesLoaded, this.appState);
+    });
+
+    // all sections have been processed and templates populated in DOM
+    ipcMain.on(sectionActions.sectionContentsLoaded, (event) => {
+      console.log('***** sectionContentsLoaded');
+      this.emitToWebContents(appActions.allSectionsLoaded);
+    });
   }
 
-  private emitToWebContents(event: AppActions, args?: string | AppState) {
+  /**
+   * Helper function to send events to ipcRenderer processes
+   * 
+   * @param event - event
+   * @param args - args
+   */
+  private emitToWebContents(event: AppActions, args?: boolean | string | AppState) {
     const mainWindow = this.electronApp.getMainWindow();
     if (!mainWindow) {
       throw new Error('Main Window Undefined in emitToWebContents');

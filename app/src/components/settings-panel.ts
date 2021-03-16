@@ -36,7 +36,7 @@ ipcRenderer.on(appActions.appStateUpdate, (event, appState) => {
 // TODO: move this to a common function to update all templates
 ipcRenderer.on(appActions.mainWindowReady, () => {
   console.log('>>>>> settingsPanel - main-window-ready');
-  loadTemplate();
+  //loadTemplate();
 });
 
 ipcRenderer.on(appActions.templateLoaded, (event, file) => {
