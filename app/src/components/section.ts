@@ -18,6 +18,7 @@ export class Section {
 
   private title: string = '';
   private isReady: boolean = false;
+  private showDivider: boolean = true;
 
   /**
    * Constructor
@@ -29,6 +30,7 @@ export class Section {
     appState: AppState
   ) {
     this.registerEventHandlers();
+    this.initializeTemplate(appState);
     this.updateTemplate(appState);
   }
 
@@ -36,6 +38,10 @@ export class Section {
     ipcRenderer.on(appActions.appStateUpdate, (event, appState) => {
       this.updateTemplate(appState);
     });
+  }
+
+  private initializeTemplate(appState: AppState) {
+    //
   }
 
   private updateTemplate(appState: AppState) {
@@ -55,6 +61,7 @@ export class Section {
     // update internal state
     this.title = contentState.title ? contentState.title : 'No Title Data';
     this.isReady = contentState.ready ? contentState.ready : false;
+    this.showDivider = contentState.showDivider ? contentState.showDivider : false;
 
     // update view
     const templateEl = document.getElementById(this.sectionId as string); // get element by id set on section containing div by load-sections.ts
@@ -73,6 +80,7 @@ export class Section {
         case 'ready': t.innerText = 'Ready: ' + this.isReady.toString(); break;
         //case 'content': t.innerText = 'Content: ' + this.sectionId; break;
         case 'content': this.loadSectionContent(t, this.sectionId); break;
+        case 'hr': t.style.display = this.showDivider ? 'block' : 'none';
         default: ;
       }
     });

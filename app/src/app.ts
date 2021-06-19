@@ -4,8 +4,7 @@ import * as path from 'path';
 import { Routes, RouteValue } from './models/routes.model';
 import { getKeyValue } from './utilities';
 
-export class ElectronApp {
-  
+export class ElectronApp {   
   /**
    * Constants
    */
@@ -42,6 +41,7 @@ export class ElectronApp {
     private mainPagePath: string,
     private mainWindowReadyCallback?: () => void
   ) {
+    //this.log = this.electronLogger.scope('ElectronApp');
     app.setName(appName);
     this.options = { ...this.defaultWindowOptions, ...windowOptions };
     

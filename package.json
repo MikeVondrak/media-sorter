@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "@types/electron": "^1.6.10",
-    "@types/node": "^14.14.27"
+    "@types/node": "^14.14.27",
+    "electron-log": "^4.3.5"
   }
 }
